@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finance Terms — Umar's Cheatsheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0a0a0a;--bg2:#111111;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+    --text:#f0f0f0;--muted:#888;--subtle:#555;
+    --ib:#c8f0d4;--ib-bg:rgba(200,240,212,0.06);--ib-border:rgba(200,240,212,0.15);
+    --pe:#d4c8f0;--pe-bg:rgba(212,200,240,0.06);--pe-border:rgba(212,200,240,0.15);
+    --val:#f0e4c8;--val-bg:rgba(240,228,200,0.06);--val-border:rgba(240,228,200,0.15);
+    --acc:#c8e4f0;--acc-bg:rgba(200,228,240,0.06);--acc-border:rgba(200,228,240,0.15);
+    --mkt:#f0c8c8;--mkt-bg:rgba(240,200,200,0.06);--mkt-border:rgba(240,200,200,0.15);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.6;min-height:100vh;}
+  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+  .container{max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+  header{padding:64px 0 48px;border-bottom:1px solid var(--border);margin-bottom:56px;}
+  .header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .header-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--subtle);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:16px;}
+  h1{font-family:'Syne',sans-serif;font-size:clamp(36px,6vw,72px);font-weight:800;line-height:1;letter-spacing:-0.03em;margin-bottom:16px;}
+  h1 span{color:var(--subtle);}
+  .header-sub{font-size:15px;color:var(--muted);max-width:520px;}
+  .header-meta{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap;}
+  .meta-pill{font-family:'DM Mono',monospace;font-size:11px;padding:6px 14px;border:1px solid var(--border2);border-radius:999px;color:var(--muted);}
+
+  /* Language toggle */
+  .lang-toggle{display:flex;align-items:center;gap:0;border:1px solid var(--border2);border-radius:8px;overflow:hidden;flex-shrink:0;margin-top:4px;}
+  .lang-btn{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.08em;padding:8px 18px;background:transparent;color:var(--muted);border:none;cursor:pointer;transition:all 0.15s;}
+  .lang-btn.active{background:var(--text);color:var(--bg);}
+  .lang-btn:not(.active):hover{color:var(--text);}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:56px;}
+  .stat{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;}
+  .stat-num{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;letter-spacing:-0.03em;line-height:1;margin-bottom:4px;}
+  .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--subtle);text-transform:uppercase;letter-spacing:0.1em;}
+  .search-wrap{margin-bottom:32px;}
+  .search-box{width:100%;max-width:480px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:12px 16px 12px 44px;font-size:14px;color:var(--text);font-family:'DM Sans',sans-serif;outline:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:14px center;}
+  .search-box::placeholder{color:var(--subtle);}
+  .search-box:focus{box-shadow:0 0 0 3px rgba(255,255,255,0.04);}
+  .filters{display:flex;gap:8px;margin-bottom:48px;flex-wrap:wrap;}
+  .filter-btn{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.08em;padding:7px 16px;border-radius:999px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.15s;text-transform:uppercase;}
+  .filter-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.25);}
+  .filter-btn.active{background:var(--text);color:var(--bg);border-color:var(--text);}
+  .section{margin-bottom:64px;}
+  .section-header{display:flex;align-items:center;gap:16px;margin-bottom:24px;}
+  .section-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;letter-spacing:-0.02em;white-space:nowrap;}
+  .section-count{font-family:'DM Mono',monospace;font-size:11px;color:var(--subtle);white-space:nowrap;}
+  .section-line{flex:1;height:1px;background:var(--border);}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px;}
+  .card{background:var(--bg2);border-radius:12px;padding:20px 22px;border:1px solid var(--border);transition:border-color 0.2s,transform 0.2s;}
+  .card:hover{border-color:var(--border2);transform:translateY(-2px);}
+  .card.ib {border-left:2px solid var(--ib-border); background:linear-gradient(135deg,var(--ib-bg),var(--bg2));}
+  .card.pe {border-left:2px solid var(--pe-border); background:linear-gradient(135deg,var(--pe-bg),var(--bg2));}
+  .card.val{border-left:2px solid var(--val-border);background:linear-gradient(135deg,var(--val-bg),var(--bg2));}
+  .card.acc{border-left:2px solid var(--acc-border);background:linear-gradient(135deg,var(--acc-bg),var(--bg2));}
+  .card.mkt{border-left:2px solid var(--mkt-border);background:linear-gradient(135deg,var(--mkt-bg),var(--bg2));}
+  .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px;}
+  .card-term{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;}
+  .card-tag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;flex-shrink:0;}
+  .tag-ib {color:var(--ib); background:var(--ib-bg); border:1px solid var(--ib-border);}
+  .tag-pe {color:var(--pe); background:var(--pe-bg); border:1px solid var(--pe-border);}
+  .tag-val{color:var(--val);background:var(--val-bg);border:1px solid var(--val-border);}
+  .tag-acc{color:var(--acc);background:var(--acc-bg);border:1px solid var(--acc-border);}
+  .tag-mkt{color:var(--mkt);background:var(--mkt-bg);border:1px solid var(--mkt-border);}
+  .card-abbr{font-family:'DM Mono',monospace;font-size:10px;color:var(--subtle);margin-bottom:10px;}
+  .card-def{font-size:13px;color:#bbb;line-height:1.65;margin-bottom:12px;}
+  .card-example{font-family:'DM Mono',monospace;font-size:11px;color:var(--subtle);padding:8px 12px;background:rgba(255,255,255,0.03);border-radius:6px;border-left:2px solid var(--border2);line-height:1.5;}
+  footer{border-top:1px solid var(--border);padding:32px 0 48px;margin-top:80px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .footer-text{font-family:'DM Mono',monospace;font-size:11px;color:var(--subtle);}
+  .empty{text-align:center;padding:80px 0;color:var(--subtle);font-family:'DM Mono',monospace;font-size:13px;display:none;}
+  .hidden{display:none!important;}
+  .lang-en .ru-text{display:none;}
+  .lang-ru .en-text{display:none;}
+</style>
+</head>
+<body class="lang-en">
+<div class="container">
+
+<header>
+  <div class="header-top">
+    <div>
+      <div class="header-label">Finance Cheatsheet · IB / PE / Corporate Finance</div>
+      <h1>Terms<span>.</span></h1>
+      <p class="header-sub">
+        <span class="en-text">Everything you need to break into Investment Banking and Private Equity. A living document — updated as you learn.</span>
+        <span class="ru-text">Всё что нужно для входа в Investment Banking и Private Equity. Живой документ — пополняется по мере изучения.</span>
+      </p>
+      <div class="header-meta">
+        <span class="meta-pill">IB · PE · Valuation</span>
+        <span class="meta-pill">Accounting</span>
+        <span class="meta-pill">Harvard Summer 2026</span>
+      </div>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="ru">RU</button>
+    </div>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">35</div><div class="stat-label"><span class="en-text">Terms</span><span class="ru-text">Терминов</span></div></div>
+  <div class="stat"><div class="stat-num">5</div><div class="stat-label"><span class="en-text">Categories</span><span class="ru-text">Категорий</span></div></div>
+  <div class="stat"><div class="stat-num">Day 1</div><div class="stat-label"><span class="en-text">Progress</span><span class="ru-text">Прогресс</span></div></div>
+  <div class="stat"><div class="stat-num">$1M</div><div class="stat-label"><span class="en-text">Goal by 35</span><span class="ru-text">Цель к 35</span></div></div>
+</div>
+
+<div class="search-wrap">
+  <input class="search-box" type="text" id="search" placeholder="Search terms..." autocomplete="off">
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" data-filter="all"><span class="en-text">All</span><span class="ru-text">Все</span></button>
+  <button class="filter-btn" data-filter="mkt"><span class="en-text">Markets</span><span class="ru-text">Рынки</span></button>
+  <button class="filter-btn" data-filter="ib">IB</button>
+  <button class="filter-btn" data-filter="val">Valuation</button>
+  <button class="filter-btn" data-filter="pe">PE</button>
+  <button class="filter-btn" data-filter="acc">Accounting</button>
+</div>
+
+<!-- MARKETS -->
+<div class="section" data-section="mkt">
+  <div class="section-header">
+    <div class="section-title"><span class="en-text">Markets — Fundamentals</span><span class="ru-text">Рынки — Основы</span></div>
+    <div class="section-count"><span class="en-text">6 terms</span><span class="ru-text">6 терминов</span></div>
+    <div class="section-line"></div>
+  </div>
+  <div class="cards">
+
+    <div class="card mkt" data-cat="mkt" data-term="sell-side services advisory fees commission bank broker goldman jpmorgan продажа услуги идеи банк">
+      <div class="card-top"><div class="card-term">Sell-side</div><span class="card-tag tag-mkt"><span class="en-text">Markets</span><span class="ru-text">Рынки</span></span></div>
+      <div class="card-def en-text">Banks and brokers that sell services and ideas to clients. They earn fixed fees and commissions — they don't risk their own capital in client transactions.</div>
+      <div class="card-def ru-text">Банки и брокеры которые продают услуги и идеи клиентам. Зарабатывают на комиссиях — не рискуют своим капиталом в сделках клиентов.</div>
+      <div class="card-example">Goldman Sachs, JPMorgan, Morgan Stanley, Barclays</div>
+    </div>
+
+    <div class="card mkt" data-cat="mkt" data-term="buy-side capital management fund return investment performance ккр управление капитал фонд">
+      <div class="card-top"><div class="card-term">Buy-side</div><span class="card-tag tag-mkt"><span class="en-text">Markets</span><span class="ru-text">Рынки</span></span></div>
+      <div class="card-def en-text">Funds that manage money and make investment decisions. They earn returns by deploying capital — income depends on portfolio performance, not fees.</div>
+      <div class="card-def ru-text">Фонды которые управляют деньгами и принимают инвестиционные решения. Зарабатывают на доходности портфеля, а не на комиссиях.</div>
+      <div class="card-example">KKR, Blackstone, BlackRock, Citadel, Bridgewater</div>
+    </div>
+
+    <div class="card mkt" data-cat="mkt" data-term="bulge bracket large global bank prestigious крупный глобальный престиж">
+      <div class="card-top"><div class="card-term">Bulge Bracket</div><span class="card-tag tag-mkt"><span class="en-text">Markets</span><span class="ru-text">Рынки</span></span></div>
+      <div class="card-def en-text">The largest global full-service investment banks. Most prestigious IB employers — they handle the world's biggest deals across every product and geography.</div>
+      <div class="card-def ru-text">Крупнейшие глобальные инвестиционные банки полного цикла. Самые престижные работодатели в IB — ведут крупнейшие сделки по всему миру.</div>
+      <div class="card-example">GS, JPMorgan, Morgan Stanley, BofA, Citi, Barclays, Deutsche Bank</div>
+    </div>
+
+    <div class="card mkt" data-cat="mkt" data-term="elite boutique advisory specialized m&a independent lazard evercore специализированный бутик">
+      <div class="card-top"><div class="card-term">Elite Boutique</div><span class="card-tag tag-mkt"><span class="en-text">Markets</span><span class="ru-text">Рынки</span></span></div>
+      <div class="card-def en-text">Smaller banks focused exclusively on advisory. Often more prestigious than Bulge Brackets in M&A — no conflicts from lending or trading desks.</div>
+      <div class="card-def ru-text">Меньшие банки специализированные только на advisory. Часто престижнее Bulge Bracket в M&A — нет конфликтов интересов от трейдинга или кредитования.</div>
+      <div class="card-example">Lazard, Evercore, Centerview, Moelis, PJT Partners</div>
+    </div>
+
+    <div class="card mkt" data-cat="mkt" data-term="s&p 500 index benchmark american market индекс бенчмарк американский рынок">
+      <div class="card-top"><div class="card-term">S&P 500</div><span class="card-tag tag-mkt"><span class="en-text">Markets</span><span class="ru-text">Рынки</span></span></div>
+      <div class="card-def en-text">Index of the 500 largest US companies by market cap. The primary benchmark — if your portfolio grows slower than S&P 500, you're underperforming the market.</div>
+      <div class="card-def ru-text">Индекс 500 крупнейших американских компаний. Главный benchmark — если портфель растёт медленнее S&P 500, ты проигрываешь рынку.</div>
+      <div class="card-example">Apple, Microsoft, Amazon, Tesla — all S&P 500 constituents</div>
+    </div>
+
+    <div class="card mkt" data-cat="mkt" data-term="equity debt stock bond shares capital financing акции облигации долг капитал">
+      <div class="card-top"><div class="card-term">Equity vs Debt</div><span class="card-tag tag-mkt"><span class="en-text">Markets</span><span class="ru-text">Рынки</span></span></div>
+      <div class="card-def en-text">Two ways to finance a company. Equity — sell a stake to shareholders, no repayment required. Debt — borrow money and pay interest, must be repaid regardless of performance.</div>
+      <div class="card-def ru-text">Два способа финансировать компанию. Equity — продать долю акционерам, возвращать не надо. Debt — взять в долг и платить проценты, обязательно вернуть.</div>
+      <div class="card-example">Apple stock = equity. Apple corporate bonds = debt.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- IB -->
+<div class="section" data-section="ib">
+  <div class="section-header">
+    <div class="section-title">Investment Banking</div>
+    <div class="section-count"><span class="en-text">11 terms</span><span class="ru-text">11 терминов</span></div>
+    <div class="section-line"></div>
+  </div>
+  <div class="cards">
+
+    <div class="card ib" data-cat="ib" data-term="m&a mergers acquisitions deal advisory transaction слияние поглощение сделка">
+      <div class="card-top"><div class="card-term">M&A</div><span class="card-tag tag-ib">IB</span></div>
+      <div class="card-abbr">Mergers & Acquisitions</div>
+      <div class="card-def en-text">Transactions where companies combine (merger) or one buys another (acquisition). The bank advises one or both sides and earns a success fee — a percentage of the deal value.</div>
+      <div class="card-def ru-text">Сделки где компании объединяются (слияние) или одна покупает другую (поглощение). Банк консультирует одну или обе стороны и получает success fee — % от суммы сделки.</div>
+      <div class="card-example">Microsoft acquired Activision for $68.7B. Goldman was the buy-side advisor.</div>
+    </div>
+
+    <div class="card ib" data-cat="ib" data-term="mandate engagement authorization client bank мандат поручение клиент право">
+      <div class="card-top"><div class="card-term">Mandate</div><span class="card-tag tag-ib">IB</span></div>
+      <div class="card-def en-text">Formal authorization from a company for a bank to run a transaction. Winning a mandate is the starting gun — the bank now officially represents the client.</div>
+      <div class="card-def ru-text">Официальное поручение банку вести сделку. Получить мандат — это старт. Банк теперь официально представляет интересы клиента в транзакции.</div>
+      <div class="card-example">"We want to sell the company — Goldman, do you take the mandate?"</div>
+    </div>
+
+    <div class="card ib" data-cat="ib" data-term="pitchbook presentation slides analyst deck питчбук презентация слайды аналитик ночь">
+      <div class="card-top"><div class="card-term">Pitchbook</div><span class="card-tag tag-ib">IB</span></div>
+      <div class="card-def en-text">A presentation the bank builds to win a mandate or advise a client. Market analysis, valuation, strategic rationale. The core output analysts spend their nights producing.</div>
+      <div class="card-def ru-text">Презентация которую банк готовит чтобы выиграть мандат или проконсультировать клиента. Анализ рынка, оценка, стратегия. Это и делают аналитики по ночам.</div>
+      <div class="card-example">50–100 slides of analysis, built overnight before a client meeting</div>
+    </div>
+
+    <div class="card ib" data-cat="ib" data-term="due diligence review audit investigation risk red flag дью дилидженс проверка риск">
+      <div class="card-top"><div class="card-term">Due Diligence</div><span class="card-tag tag-ib">IB</span></div>
+      <div class="card-def en-text">Deep investigation of a target company before closing a deal. Covers financials, legal, operations, and HR. The goal: find hidden problems before they become your problems post-close.</div>
+      <div class="card-def ru-text">Глубокая проверка компании-цели до закрытия сделки. Финансы, юридика, операции, HR. Цель — найти скрытые проблемы до того как они станут твоими проблемами.</div>
+      <div class="card-example">Hidden liabilities or undisclosed litigation = red flag; deal may collapse</div>
+    </div>
+
+    <div class="card ib" data-cat="ib" data-term="synergies revenue cost combined value синергии выручка затраты объединение">
+      <div class="card-top"><div class="card-term">Synergies</div><span class="card-tag tag-ib">IB</span></div>
+      <div class="card-def en-text">Additional value created by combining two companies. Revenue synergies — sell more together. Cost synergies — eliminate overlap and spend less. The primary justification for most M&A.</div>
+      <div class="card-def ru-text">Дополнительная ценность от объединения компаний. Revenue synergies — вместе продаём больше. Cost synergies — убираем дублирование и тратим меньше. Главное обоснование M&A.</div>
+      <div class="card-example">Zomato + Blinkit: new markets (revenue) + logistics overlap removed (cost)</div>
+    </div>
+
+    <div class="card ib" data-cat="ib" data-term="acquisition premium control price above market надбавка контроль премия цена акция">
+      <div class="card-top"><div class="card-term">Acquisition Premium</div><span class="card-tag tag-ib">IB</span></div>
+      <div class="card-def en-text">The amount paid above the current market price of the target. Typically 20–40%. You pay extra because you're buying control — the ability to run the company as you choose.</div>
+      <div class="card-def ru-text">Надбавка к рыночной цене которую платит покупатель. Обычно 20–40%. Платишь больше потому что покупаешь контроль — право управлять компанией по своему усмотрению.</div>
+      <div class="card-example">Stock at $100 → offer at $130 → 30% acquisition premium paid for control</div>
+    </div>
+
+    <div class="card ib" data-cat="ib" data-term="ipo initial public offering listing shares биржа акции первичное размещение публичный">
+      <div class="card-top"><div class="card-term">IPO</div><span class="card-tag tag-ib">IB</span></div>
+      <div class="card-abbr">Initial Public Offering</div>
+      <div class="card-def en-text">The first time a private company sells shares to the public on a stock exchange. Companies IPO to raise capital, give early investors an exit, and gain a public currency for future deals.</div>
+      <div class="card-def ru-text">Первый раз когда частная компания продаёт акции публике на бирже. IPO — чтобы привлечь капитал, дать ранним инвесторам выход и получить публичную валюту для будущих сделок.</div>
+      <div class="card-example">Airbnb 2020: priced at $68, closed day one at $144 — a 112% first-day pop</div>
+    </div>
+
+    <div class="card ib" data-cat="ib" data-term="underwriter bank ipo organizer roadshow pricing андеррайтер организатор семь процентов">
+      <div class="card-top"><div class="card-term">Underwriter</div><span class="card-tag tag-ib">IB</span></div>
+      <div class="card-def en-text">The bank that organizes an IPO. Values the company, runs the roadshow, books investor orders, and guarantees the placement. Earns approximately 7% of total proceeds raised.</div>
+      <div class="card-def ru-text">Банк который организует IPO. Оценивает компанию, проводит roadshow, собирает заявки инвесторов и гарантирует размещение. Берёт ~7% от суммы привлечённого капитала.</div>
+      <div class="card-example">Goldman Sachs and Morgan Stanley were Airbnb's lead underwriters</div>
+    </div>
+
+    <div class="card ib" data-cat="ib" data-term="roadshow ipo tour investors pitch cities две недели тур инвесторы города">
+      <div class="card-top"><div class="card-term">Roadshow</div><span class="card-tag tag-ib">IB</span></div>
+      <div class="card-def en-text">A two-week sprint where management and the bank pitch the company story to major institutional investors across global financial cities before an IPO to build the order book.</div>
+      <div class="card-def ru-text">Двухнедельный тур менеджмента и банка по крупным институциональным инвесторам перед IPO. Нью-Йорк, Бостон, Лондон, Сингапур — за две недели. CFO продаёт историю компании.</div>
+      <div class="card-example">CFO flies NY → Boston → London → Singapore to convince institutions to buy</div>
+    </div>
+
+    <div class="card ib" data-cat="ib" data-term="direct listing spotify coinbase no underwriter market determines price прямой листинг без андеррайтера">
+      <div class="card-top"><div class="card-term">Direct Listing</div><span class="card-tag tag-ib">IB</span></div>
+      <div class="card-def en-text">Going public without an underwriter or pre-set IPO price. The market determines the price organically on day one. Cheaper and avoids underpricing — but no new capital is raised.</div>
+      <div class="card-def ru-text">Выход на биржу без андеррайтера и фиксированной IPO цены. Рынок сам определяет цену в первый день. Дешевле и избегает занижения цены — но новый капитал не привлекается.</div>
+      <div class="card-example">Spotify and Coinbase both chose Direct Listings over traditional IPOs</div>
+    </div>
+
+    <div class="card ib" data-cat="ib" data-term="career path analyst associate vp md salary compensation карьера аналитик зарплата путь">
+      <div class="card-top"><div class="card-term">IB Career Path</div><span class="card-tag tag-ib">IB</span></div>
+      <div class="card-def en-text">Analyst (0–2yr) → Associate → VP → Director → MD. Most analysts exit to PE or Hedge Funds after two years. Compensation is non-linear — it explodes at VP and above.</div>
+      <div class="card-def ru-text">Analyst (0–2 года) → Associate → VP → Director → MD. Большинство аналитиков уходят в PE или Hedge Fund через 2 года. Компенсация нелинейная — резко растёт на уровне VP+.</div>
+      <div class="card-example">$180–220K → $250–400K → $400–700K → $1M+ at Managing Director</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- VALUATION -->
+<div class="section" data-section="val">
+  <div class="section-header">
+    <div class="section-title">Valuation</div>
+    <div class="section-count"><span class="en-text">9 terms</span><span class="ru-text">9 терминов</span></div>
+    <div class="section-line"></div>
+  </div>
+  <div class="cards">
+
+    <div class="card val" data-cat="val" data-term="p/e price earnings multiple ratio stock прибыль мультипликатор стоимость">
+      <div class="card-top"><div class="card-term">P/E Ratio</div><span class="card-tag tag-val">Valuation</span></div>
+      <div class="card-abbr">Price to Earnings</div>
+      <div class="card-def en-text">Share price divided by earnings per share. Shows how much the market pays for $1 of profit. Implied equity value = P/E × Net Income. Simple but distorted by capital structure.</div>
+      <div class="card-def ru-text">Цена акции делённая на прибыль на акцию. Сколько рынок платит за $1 прибыли. Стоимость компании = P/E × Net Income. Простой, но искажается структурой капитала.</div>
+      <div class="card-example">P/E = 20, Net Income = $500M → implied equity value = $10B</div>
+    </div>
+
+    <div class="card val" data-cat="val" data-term="ev ebitda enterprise value multiple debt neutral comparable убирает долг нейтральный">
+      <div class="card-top"><div class="card-term">EV/EBITDA</div><span class="card-tag tag-val">Valuation</span></div>
+      <div class="card-def en-text">The go-to multiple in IB and PE. Removes debt distortion — two identical businesses with different capital structures show the same EV/EBITDA. Far more comparable than P/E.</div>
+      <div class="card-def ru-text">Главный мультипликатор в IB и PE. Убирает искажение долгом — два одинаковых бизнеса с разной структурой капитала покажут одинаковый EV/EBITDA. Намного честнее P/E.</div>
+      <div class="card-example">Sector at 10x EBITDA, company earns $1B EBITDA → implied EV ≈ $10B</div>
+    </div>
+
+    <div class="card val" data-cat="val" data-term="enterprise value ev total acquisition cost business debt cash полная стоимость бизнес долг кэш">
+      <div class="card-top"><div class="card-term">Enterprise Value (EV)</div><span class="card-tag tag-val">Valuation</span></div>
+      <div class="card-def en-text">The total cost to acquire a business outright, including its debt. Formula: EV = Market Cap + Total Debt − Cash. What you actually pay to own the entire company free and clear.</div>
+      <div class="card-def ru-text">Полная стоимость покупки бизнеса включая его долг. Формула: EV = Рыночная кап. + Долг − Кэш. Сколько реально заплатишь чтобы купить всю компанию целиком.</div>
+      <div class="card-example">Apple: $2,800B + $111B debt − $62B cash = $2,849B EV</div>
+    </div>
+
+    <div class="card val" data-cat="val" data-term="ebitda earnings before interest taxes depreciation amortization operating операционная прибыль до процентов налогов">
+      <div class="card-top"><div class="card-term">EBITDA</div><span class="card-tag tag-val">Valuation</span></div>
+      <div class="card-abbr">Earnings Before Interest, Taxes, Depreciation & Amortization</div>
+      <div class="card-def en-text">Operating profit stripped of financing decisions and non-cash items. Shows the raw earning power of a business independent of how it's financed or how assets are depreciated.</div>
+      <div class="card-def ru-text">Операционная прибыль без финансовых решений и неденежных статей. Показывает реальную зарабатывающую силу бизнеса — независимо от структуры финансирования или амортизации.</div>
+      <div class="card-example">What the business earns operationally — before debt, taxes, and accounting</div>
+    </div>
+
+    <div class="card val" data-cat="val" data-term="comps comparable companies public peer multiples industry сравнение публичные компании индустрия">
+      <div class="card-top"><div class="card-term">Comparable Companies</div><span class="card-tag tag-val">Valuation</span></div>
+      <div class="card-abbr">Comps</div>
+      <div class="card-def en-text">Valuing a company using the trading multiples of similar publicly listed peers in the same sector. The most common starting point in any valuation — fast, market-based, and defensible.</div>
+      <div class="card-def ru-text">Оценка через торговые мультипликаторы похожих публичных компаний в той же индустрии. Самый распространённый отправной пункт в любой оценке — быстро, рыночно и защищаемо.</div>
+      <div class="card-example">All restaurants trade at 8x EBITDA → our restaurant should be valued similarly</div>
+    </div>
+
+    <div class="card val" data-cat="val" data-term="precedent transactions past deals m&a premium sector history прошлые сделки история премия">
+      <div class="card-top"><div class="card-term">Precedent Transactions</div><span class="card-tag tag-val">Valuation</span></div>
+      <div class="card-def en-text">Valuing using multiples paid in past M&A deals in the same sector. Always higher than Comps because real acquirers paid an acquisition premium for control. Shows what buyers actually paid.</div>
+      <div class="card-def ru-text">Оценка через мультипликаторы прошлых M&A сделок в той же индустрии. Всегда выше Comps — реальные покупатели платили acquisition premium за контроль. Показывает что реально платили.</div>
+      <div class="card-example">Past sector deals at 11–13x → you can justify asking the same in a sale process</div>
+    </div>
+
+    <div class="card val" data-cat="val" data-term="dcf discounted cash flow intrinsic value wacc terminal future дисконтирование будущие потоки внутренняя стоимость">
+      <div class="card-top"><div class="card-term">DCF</div><span class="card-tag tag-val">Valuation</span></div>
+      <div class="card-abbr">Discounted Cash Flow</div>
+      <div class="card-def en-text">Valuing a company by projecting future cash flows and discounting them to today's value. Built on time value of money: $1 today is worth more than $1 in the future.</div>
+      <div class="card-def ru-text">Оценка через будущие денежные потоки приведённые к сегодняшней стоимости. Основан на time value of money: $1 сегодня > $1 завтра. Теоретически наиболее "правильный" метод.</div>
+      <div class="card-example">Project FCF for 5 years + Terminal Value, discount at WACC = intrinsic value</div>
+    </div>
+
+    <div class="card val" data-cat="val" data-term="football field chart valuation range pitchbook three methods диапазон оценка три метода пересечение">
+      <div class="card-top"><div class="card-term">Football Field Chart</div><span class="card-tag tag-val">Valuation</span></div>
+      <div class="card-def en-text">A standard pitchbook chart showing valuation ranges from all three methods side by side. Where all three overlap = the defensible fair value range you can stand behind in negotiations.</div>
+      <div class="card-def ru-text">Стандартный график в питчбуке с диапазонами оценки по всем трём методам. Где все три пересекаются = защищаемый диапазон справедливой стоимости на переговорах.</div>
+      <div class="card-example">Comps $8–12B + Transactions $10–14B + DCF $9–13B → conclusion: $10–12B</div>
+    </div>
+
+    <div class="card val" data-cat="val" data-term="ltm ntm last next twelve months period multiple trailing forward последние следующие двенадцать месяцев">
+      <div class="card-top"><div class="card-term">LTM / NTM</div><span class="card-tag tag-val">Valuation</span></div>
+      <div class="card-abbr">Last / Next Twelve Months</div>
+      <div class="card-def en-text">Time periods used when calculating multiples. LTM = trailing 12 months of actual results. NTM = next 12 months of estimates. NTM is forward-looking and generally preferred.</div>
+      <div class="card-def ru-text">Временные периоды для расчёта мультипликаторов. LTM = последние 12 месяцев фактических результатов. NTM = прогноз на следующие 12 месяцев. NTM смотрит вперёд — предпочтительнее.</div>
+      <div class="card-example">P/E on NTM earnings looks forward. P/E on LTM earnings looks backward.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PE -->
+<div class="section" data-section="pe">
+  <div class="section-header">
+    <div class="section-title">Private Equity</div>
+    <div class="section-count"><span class="en-text">6 terms</span><span class="ru-text">6 терминов</span></div>
+    <div class="section-line"></div>
+  </div>
+  <div class="cards">
+
+    <div class="card pe" data-cat="pe" data-term="lbo leveraged buyout debt equity amplify return выкуп с рычагом долг доходность иксы">
+      <div class="card-top"><div class="card-term">LBO</div><span class="card-tag tag-pe">PE</span></div>
+      <div class="card-abbr">Leveraged Buyout</div>
+      <div class="card-def en-text">Acquiring a company using mostly borrowed money (~70% debt, ~30% equity). The debt amplifies the return on equity invested. The defining transaction type in Private Equity.</div>
+      <div class="card-def ru-text">Покупка компании в основном на заёмные деньги (~70% долг, ~30% equity). Долг усиливает доходность на вложенный собственный капитал. Главный тип сделки в Private Equity.</div>
+      <div class="card-example">Invested $300M equity, bought for $1B, sold for $1.8B → 4x return on equity</div>
+    </div>
+
+    <div class="card pe" data-cat="pe" data-term="leverage debt amplify return risk financial roe рычаг долг доходность риск усиление">
+      <div class="card-top"><div class="card-term">Leverage</div><span class="card-tag tag-pe">PE</span></div>
+      <div class="card-def en-text">Using borrowed money to amplify returns on your own capital. A leveraged deal produces a much higher ROE for the same gain. It cuts both ways — losses are amplified equally.</div>
+      <div class="card-def ru-text">Использование заёмных денег для усиления доходности на собственный капитал. Даёт гораздо более высокий ROE при том же результате. Работает в обе стороны — убытки усиливаются тоже.</div>
+      <div class="card-example">Like a mortgage: put in 20%, profit from 100% of the price appreciation</div>
+    </div>
+
+    <div class="card pe" data-cat="pe" data-term="carried interest carry 20% profit fund managers wealth кэрри прибыль фонд управляющие богатство">
+      <div class="card-top"><div class="card-term">Carried Interest</div><span class="card-tag tag-pe">PE</span></div>
+      <div class="card-def en-text">The 20% of fund profits that go to the fund managers ("the carry"). The primary source of wealth in PE. Managers also charge a ~2% annual management fee on committed capital.</div>
+      <div class="card-def ru-text">20% от прибыли фонда которые получают управляющие ("кэрри"). Главный источник богатства в PE. Плюс управляющие берут ~2% в год от committed capital за управление.</div>
+      <div class="card-example">Fund generates $1B profit → managers take $200M in carried interest</div>
+    </div>
+
+    <div class="card pe" data-cat="pe" data-term="multiple expansion ebitda buy sell higher valuation расширение мультипликатора переоценка рынок">
+      <div class="card-top"><div class="card-term">Multiple Expansion</div><span class="card-tag tag-pe">PE</span></div>
+      <div class="card-def en-text">Profit from selling at a higher EBITDA multiple than you paid. One of three LBO return drivers alongside EBITDA growth and debt paydown. Pure market re-rating.</div>
+      <div class="card-def ru-text">Прибыль от продажи по более высокому мультипликатору EBITDA чем при покупке. Один из трёх источников доходности LBO наряду с ростом EBITDA и погашением долга.</div>
+      <div class="card-example">Bought at 8x EBITDA, sold at 11x → profit without growing the business at all</div>
+    </div>
+
+    <div class="card pe" data-cat="pe" data-term="track record history performance fund reputation lp история доходность репутация следующий фонд">
+      <div class="card-top"><div class="card-term">Track Record</div><span class="card-tag tag-pe">PE</span></div>
+      <div class="card-def en-text">A fund's historical performance across all its investments. The most valuable asset in PE — without a strong track record, LPs won't commit capital to your next fund. Reputation is currency.</div>
+      <div class="card-def ru-text">История доходности фонда по всем инвестициям. Самый ценный актив в PE — без сильного track record никто не даст денег на следующий фонд. Репутация это валюта.</div>
+      <div class="card-example">Lose investors' money → no one gives you capital for Fund IV</div>
+    </div>
+
+    <div class="card pe" data-cat="pe" data-term="capital structure waterfall seniority debt equity bankruptcy priority водопад капитал банкротство порядок выплат">
+      <div class="card-top"><div class="card-term">Capital Structure Waterfall</div><span class="card-tag tag-pe">PE</span></div>
+      <div class="card-def en-text">The priority of who gets paid in a bankruptcy: Secured Debt → Unsecured Debt → Preferred Equity → Common Equity. Equity is always last — highest risk, highest potential upside.</div>
+      <div class="card-def ru-text">Порядок выплат при банкротстве: Secured Debt → Unsecured Debt → Preferred Equity → Common Equity. Equity всегда последний — максимальный риск, максимальный потенциальный upside.</div>
+      <div class="card-example">Assets $600M, total debt $700M → equity holders receive $0</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ACCOUNTING -->
+<div class="section" data-section="acc">
+  <div class="section-header">
+    <div class="section-title">Financial Accounting</div>
+    <div class="section-count"><span class="en-text">9 terms</span><span class="ru-text">9 терминов</span></div>
+    <div class="section-line"></div>
+  </div>
+  <div class="cards">
+
+    <div class="card acc" data-cat="acc" data-term="income statement p&l profit loss revenue net income отчёт прибылях убытках выручка">
+      <div class="card-top"><div class="card-term">Income Statement</div><span class="card-tag tag-acc">Accounting</span></div>
+      <div class="card-abbr">P&L — Profit & Loss</div>
+      <div class="card-def en-text">Shows profitability over a period. The journey from Revenue to Net Income: Revenue → Gross Profit → EBITDA → EBIT → EBT → Net Income. Each line tells a different story.</div>
+      <div class="card-def ru-text">Показывает прибыльность за период. Путь от Revenue до Net Income: Revenue → Gross Profit → EBITDA → EBIT → EBT → Net Income. Каждая строка рассказывает свою часть истории.</div>
+      <div class="card-example">Revenue $1B − all costs and taxes = Net Income $100M (10% net margin)</div>
+    </div>
+
+    <div class="card acc" data-cat="acc" data-term="balance sheet assets liabilities equity snapshot баланс активы обязательства капитал снимок момент">
+      <div class="card-top"><div class="card-term">Balance Sheet</div><span class="card-tag tag-acc">Accounting</span></div>
+      <div class="card-def en-text">A snapshot of the company at a single point in time. The fundamental equation always holds: Assets = Liabilities + Equity. Everything owned was financed by either debt or equity.</div>
+      <div class="card-def ru-text">Снимок компании в конкретный момент времени. Фундаментальное уравнение всегда выполняется: Assets = Liabilities + Equity. Всё что есть — куплено либо на долг либо на свои деньги.</div>
+      <div class="card-example">Coffee machine $10K = bank loan $8K + owner's own money $2K. Always balances.</div>
+    </div>
+
+    <div class="card acc" data-cat="acc" data-term="cash flow statement cfo cfi cff real money кэш движение денег реальный период изменение">
+      <div class="card-top"><div class="card-term">Cash Flow Statement</div><span class="card-tag tag-acc">Accounting</span></div>
+      <div class="card-def en-text">Tracks actual cash moving through the business over a period. CFO + CFI + CFF = change in cash balance. A profitable company can still die from a cash shortage — this shows the truth.</div>
+      <div class="card-def ru-text">Отслеживает реальный кэш через бизнес за период. CFO + CFI + CFF = изменение остатка кэша. Прибыльная компания может умереть от нехватки денег — этот отчёт показывает правду.</div>
+      <div class="card-example">Net Income $100M but cash fell $50M — they invested heavily in equipment (CFI)</div>
+    </div>
+
+    <div class="card acc" data-cat="acc" data-term="cfo cash flow operations core business self-sustaining операционный кэш основной бизнес самодостаточность">
+      <div class="card-top"><div class="card-term">CFO</div><span class="card-tag tag-acc">Accounting</span></div>
+      <div class="card-abbr">Cash Flow from Operations</div>
+      <div class="card-def en-text">Cash generated by the core business. The most important line in the Cash Flow Statement — a consistently positive CFO means the business sustains itself without outside financing.</div>
+      <div class="card-def ru-text">Кэш от основной деятельности бизнеса. Самая важная строка в отчёте — стабильно положительный CFO означает что бизнес живёт сам по себе без внешнего финансирования.</div>
+      <div class="card-example">Coffee shop sells coffee every day → that daily cash generation is CFO</div>
+    </div>
+
+    <div class="card acc" data-cat="acc" data-term="cfi cash flow investing capex equipment acquisition инвестиции капвложения оборудование поглощения отрицательный">
+      <div class="card-top"><div class="card-term">CFI</div><span class="card-tag tag-acc">Accounting</span></div>
+      <div class="card-abbr">Cash Flow from Investing</div>
+      <div class="card-def en-text">Cash spent on long-term investments: equipment, acquisitions, or infrastructure. Almost always negative for growing companies — spending today to earn more tomorrow.</div>
+      <div class="card-def ru-text">Кэш потраченный на долгосрочные инвестиции: оборудование, поглощения, инфраструктура. Почти всегда отрицательный у растущих компаний — тратят сегодня чтобы зарабатывать больше завтра.</div>
+      <div class="card-example">Bought new equipment for $50M → CFI = −$50M for that period</div>
+    </div>
+
+    <div class="card acc" data-cat="acc" data-term="cff cash flow financing debt equity dividends borrow repay финансирование кредит дивиденды выпуск акций">
+      <div class="card-top"><div class="card-term">CFF</div><span class="card-tag tag-acc">Accounting</span></div>
+      <div class="card-abbr">Cash Flow from Financing</div>
+      <div class="card-def en-text">Cash from financial transactions with lenders and shareholders. Borrowing or issuing shares is positive. Repaying debt, buying back stock, or paying dividends is negative.</div>
+      <div class="card-def ru-text">Кэш от финансовых транзакций с кредиторами и акционерами. Взяли кредит или выпустили акции — плюс. Погасили долг, выкупили акции или заплатили дивиденды — минус.</div>
+      <div class="card-example">Raised $100M bank loan → CFF = +$100M for that period</div>
+    </div>
+
+    <div class="card acc" data-cat="acc" data-term="net income bottom line final profit after tax interest чистая прибыль итог после налогов процентов расходов">
+      <div class="card-top"><div class="card-term">Net Income</div><span class="card-tag tag-acc">Accounting</span></div>
+      <div class="card-def en-text">The "bottom line" — profit after all expenses, interest, and taxes. Flows into the Balance Sheet (increases Equity) and is the starting point of the Cash Flow Statement.</div>
+      <div class="card-def ru-text">"Нижняя строка" — прибыль после всех расходов, процентов и налогов. Переходит в Balance Sheet (увеличивает Equity) и является отправной точкой Cash Flow Statement.</div>
+      <div class="card-example">Revenue $1B − COGS − OpEx − D&A − Interest − Taxes = Net Income $97M</div>
+    </div>
+
+    <div class="card acc" data-cat="acc" data-term="dscr debt service coverage ratio bank lbo credit покрытие долга коэффициент банк безопасность">
+      <div class="card-top"><div class="card-term">DSCR</div><span class="card-tag tag-acc">Accounting</span></div>
+      <div class="card-abbr">Debt Service Coverage Ratio</div>
+      <div class="card-def en-text">Operating cash flow divided by total debt payments due. What every lender checks before approving a loan. Below 1.2x is dangerous. Above 2.0x is healthy and comfortable.</div>
+      <div class="card-def ru-text">Операционный кэш делённый на платежи по долгу. Что каждый кредитор проверяет перед выдачей кредита. Ниже 1.2x — опасно. Выше 2.0x — здорово и комфортно.</div>
+      <div class="card-example">DSCR = 2.0x → earns twice the cash needed to service all debt obligations</div>
+    </div>
+
+    <div class="card acc" data-cat="acc" data-term="3 statement model three linked excel financial modeling три отчёта связанная модель excel базовый навык">
+      <div class="card-top"><div class="card-term">3-Statement Model</div><span class="card-tag tag-acc">Accounting</span></div>
+      <div class="card-def en-text">A fully integrated financial model linking all three statements. Net Income flows into Balance Sheet and Cash Flow. Change one assumption — everything recalculates. The baseline IB analyst skill.</div>
+      <div class="card-def ru-text">Полностью интегрированная финансовая модель из трёх связанных отчётов. Net Income течёт в Balance Sheet и Cash Flow. Меняешь одно допущение — всё пересчитывается. Базовый навык IB аналитика.</div>
+      <div class="card-example">Change revenue growth → EBITDA, Net Income, cash, and debt all update automatically</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="empty" id="empty-state">
+  <span class="en-text">No terms found. Try a different search.</span>
+  <span class="ru-text">Ничего не найдено. Попробуй другой запрос.</span>
+</div>
+
+<footer>
+  <span class="footer-text">Finance Cheatsheet · Umar · 2026</span>
+  <span class="footer-text">IB → PE → $1M before 35</span>
+</footer>
+
+</div>
+<script>
+const searchEl = document.getElementById('search');
+const filterBtns = document.querySelectorAll('.filter-btn');
+const langBtns = document.querySelectorAll('.lang-btn');
+const cards = document.querySelectorAll('.card');
+const sections = document.querySelectorAll('.section[data-section]');
+const empty = document.getElementById('empty-state');
+let currentFilter = 'all', currentSearch = '';
+
+function update() {
+  let visible = 0;
+  cards.forEach(card => {
+    const cat = card.dataset.cat;
+    const term = (card.dataset.term || '') + ' ' + card.innerText.toLowerCase();
+    const matchFilter = currentFilter === 'all' || cat === currentFilter;
+    const matchSearch = !currentSearch || term.includes(currentSearch);
+    card.classList.toggle('hidden', !(matchFilter && matchSearch));
+    if (matchFilter && matchSearch) visible++;
+  });
+  sections.forEach(section => {
+    const sec = section.dataset.section;
+    const matchSection = currentFilter === 'all' || currentFilter === sec;
+    const hasVisible = section.querySelectorAll('.card:not(.hidden)').length > 0;
+    section.classList.toggle('hidden', !matchSection || !hasVisible);
+  });
+  empty.style.display = visible === 0 ? 'block' : 'none';
+}
+
+searchEl.addEventListener('input', e => {
+  currentSearch = e.target.value.toLowerCase().trim();
+  update();
+});
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    update();
+  });
+});
+
+langBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    langBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const lang = btn.dataset.lang;
+    document.body.className = 'lang-' + lang;
+    searchEl.placeholder = lang === 'ru' ? 'Поиск по терминам...' : 'Search terms...';
+  });
+});
+</script>
+</body>
+</html>
